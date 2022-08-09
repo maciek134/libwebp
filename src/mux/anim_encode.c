@@ -1038,7 +1038,7 @@ static void PickBestCandidate(WebPAnimEncoder* const enc,
               (best_idx == LL_DISP_NONE || best_idx == LOSSY_DISP_NONE)
                   ? WEBP_MUX_DISPOSE_NONE
                   : WEBP_MUX_DISPOSE_BACKGROUND;
-          SetPreviousDisposeMethod(enc, prev_dispose_method);
+          SetPreviousDisposeMethod(enc, WEBP_MUX_DISPOSE_BACKGROUND);
         }
         enc->prev_rect_ = candidates[i].rect_;  // save for next frame.
       } else {
@@ -1139,7 +1139,7 @@ static WebPEncodingError SetFrame(WebPAnimEncoder* const enc,
 
     if (enc->options_.minimize_size) {  // Try both dispose methods.
       dispose_bg_params.should_try_ = 1;
-      dispose_none_params.should_try_ = 1;
+      dispose_none_params.should_try_ = 0;
     } else if ((is_lossless &&
                 RectArea(&dispose_bg_params.rect_ll_) <
                     RectArea(&dispose_none_params.rect_ll_)) ||
